@@ -1,0 +1,10 @@
+import {useState} from 'react';
+export function PageHeader({title,subtitle,action}){return <div className="page-head"><div><h1>{title}</h1><p>{subtitle}</p></div>{action}</div>}
+export function StatCard({label,value,icon:Icon,tone='green'}){return <div className="stat-card"><div className={`stat-icon ${tone}`}>{Icon&&<Icon size={20}/>}</div><div><span>{label}</span><strong>{value??'—'}</strong></div></div>}
+export function Spinner(){return <div className="spinner-wrap"><div className="spinner"/>Loading data…</div>}
+export function Notice({message,type='success',onClose}){if(!message)return null;return <div className={`notice ${type}`} role="status">{message}<button onClick={onClose}>×</button></div>}
+export function Modal({title,children,onClose}){return <div className="modal-backdrop" onMouseDown={e=>e.target===e.currentTarget&&onClose()}><section className="modal"><div className="modal-head"><h2>{title}</h2><button className="icon-btn" onClick={onClose}>×</button></div>{children}</section></div>}
+export function Confirm({message,onConfirm,onCancel}){return <Modal title="Please confirm" onClose={onCancel}><p>{message}</p><div className="form-actions"><button className="btn ghost" onClick={onCancel}>Cancel</button><button className="btn danger" onClick={onConfirm}>Delete</button></div></Modal>}
+export function SearchBox({value,onChange,placeholder='Search…'}){return <input className="search" value={value} onChange={e=>onChange(e.target.value)} placeholder={placeholder}/>}
+export function DataTable({columns,rows,empty='No records found.'}){return <div className="table-wrap"><table><thead><tr>{columns.map(c=><th key={c.key}>{c.label}</th>)}</tr></thead><tbody>{rows.length?rows.map((r,i)=><tr key={r.id??i}>{columns.map(c=><td key={c.key}>{c.render?c.render(r):r[c.key]??'—'}</td>)}</tr>):<tr><td colSpan={columns.length} className="empty">{empty}</td></tr>}</tbody></table></div>}
+export function Field({label,children}){return <label className="field"><span>{label}</span>{children}</label>}
